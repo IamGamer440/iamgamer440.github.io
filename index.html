@@ -1,87 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IAmGamer440 | Game Fixes 2026</title>
+    <title>IAmGamer440 | Gaming Hub</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0f0f0f; color: white; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .main-card { background: #1a1a1a; padding: 25px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.7); width: 100%; max-width: 550px; border: 1px solid #333; text-align: center; }
-        h1 { color: #ff4c4c; font-size: 30px; margin-bottom: 5px; }
-        .subtitle { color: #aaa; margin-bottom: 20px; font-size: 14px; letter-spacing: 1px; }
+        /* --- Base Styles --- */
+        body { 
+            background: #0f172a url('bg.jpg') no-repeat center center fixed; 
+            background-size: cover; color: white; font-family: 'Segoe UI', sans-serif; 
+            margin: 0; overflow-y: scroll; min-height: 100vh;
+        }
 
-        /* Search Bar Styling */
-        #searchBar { width: 90%; padding: 12px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #444; background: #252525; color: white; font-size: 15px; outline: none; }
-        #searchBar:focus { border-color: #ff4c4c; box-shadow: 0 0 10px rgba(255, 76, 76, 0.2); }
+        /* --- Slide-Up Welcome Screen --- */
+        #welcome-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('welcome-bg.jpg') no-repeat center center;
+            background-size: cover; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999; text-align: center;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+        }
+        .welcome-slide-up { transform: translateY(-100%); opacity: 0; }
+        .welcome-title { font-size: 65px; font-weight: 900; margin-bottom: 5px; text-shadow: 0 0 20px rgba(255, 76, 76, 0.8), 4px 4px 10px #000; }
+        .welcome-subtitle { font-size: 18px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); padding: 8px 25px; border-radius: 50px; margin-bottom: 40px; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .welcome-btn { padding: 18px 50px; font-size: 24px; font-weight: bold; background: linear-gradient(45deg, #ff4c4c, #ff1e1e); color: white; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 0 25px rgba(255, 76, 76, 0.5); transition: 0.3s; }
+        .welcome-btn:hover { transform: scale(1.1); box-shadow: 0 10px 40px #ff4c4c; }
+
+        /* --- Main Site --- */
+        #main-site { display: none; padding: 20px; text-align: center; opacity: 0; transition: opacity 1s ease-in; }
+        .main-show { display: block !important; opacity: 1 !important; }
+        .container { max-width: 1100px; margin: auto; }
+        h1 { color: #ff4c4c; text-shadow: 0 0 15px rgba(255, 76, 76, 0.6); font-size: 40px; }
         
-        /* Game Section Styling */
-        .file-section { background: #252525; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 6px solid #ff4c4c; text-align: left; transition: 0.3s; }
-        .file-section:hover { background: #2d2d2d; transform: scale(1.02); }
-        .file-name { font-weight: bold; font-size: 17px; color: #eee; display: block; margin-bottom: 5px; }
-        .description { font-size: 13px; color: #999; margin-bottom: 12px; line-height: 1.4; }
+        .tabs { margin-bottom: 30px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .tab-btn { background: rgba(255, 76, 76, 0.1); border: 1px solid #ff4c4c; color: white; padding: 10px 20px; cursor: pointer; border-radius: 30px; transition: 0.3s; font-weight: bold; }
+        .tab-btn.active { background: #ff4c4c; box-shadow: 0 0 15px #ff4c4c; }
+
+        #searchBox { width: 80%; padding: 15px 25px; border-radius: 50px; border: 2px solid #ff4c4c; background: rgba(30, 41, 59, 0.9); color: white; font-size: 18px; outline: none; margin-bottom: 40px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); padding: 25px; border-radius: 20px; border: 1px solid #334155; transition: 0.4s; text-align: left; }
+        .card h3 { margin: 0 0 10px 0; border-bottom: 1px solid #ff4c4c; padding-bottom: 10px; font-size: 18px; }
         
-        .btn { background: #ff4c4c; color: white; padding: 10px 22px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; transition: 0.2s; font-size: 13px; border: none; cursor: pointer; }
-        .btn:hover { background: #e63e3e; box-shadow: 0 0 15px rgba(255, 76, 76, 0.4); }
-        
-        .footer-info { margin-top: 25px; padding-top: 15px; border-top: 1px solid #333; }
-        .password { color: #ff4c4c; font-weight: bold; font-size: 14px; }
-        .instagram { color: #E1306C; text-decoration: none; font-size: 14px; font-weight: bold; }
+        .dl-btn { display: block; background: #ff4c4c; color: white; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; margin-top: 15px; font-weight: bold; }
+
+        /* --- Fix for Coming Soon & Instagram Section --- */
+        .coming-soon-btn { 
+            display: block; background: #1e293b; color: #94a3b8; text-align: center; 
+            padding: 12px; border-radius: 10px; margin-top: 15px; font-weight: bold; 
+            border: 1px dashed #475569; position: relative; overflow: hidden; font-size: 14px;
+        }
+
+        .request-box { 
+            margin-top: 15px; padding: 10px; background: rgba(255, 255, 255, 0.05); 
+            border-radius: 12px; display: flex; justify-content: space-between; 
+            align-items: center; border-left: 4px solid #ff4c4c; gap: 10px;
+        }
+
+        .request-text { font-size: 12px; color: #cbd5e1; white-space: nowrap; }
+
+        .insta-btn { 
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white; border: none; padding: 6px 12px; border-radius: 8px; 
+            text-decoration: none; font-weight: bold; font-size: 11px; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .insta-btn:hover { transform: scale(1.05); }
+
+        .music-btn { position: fixed; bottom: 20px; right: 20px; background: #1e293b; padding: 10px 20px; border-radius: 50px; cursor: pointer; border: 1px solid #ff4c4c; color: white; z-index: 1000; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <div class="main-card">
-        <h1>@iamgamer440</h1>
-        <p class="subtitle">OFFICIAL GAME FIXES & FILES</p>
+    <div id="welcome-screen">
+        <div class="welcome-title">WELCOME GAMER</div>
+        <div class="welcome-subtitle">OFFICIAL GAME FIXES & FOLDERS 2026</div>
+        <button class="welcome-btn" onclick="openSite()">ENTER THE HUB 🎮</button>
+    </div>
 
-        <!-- Search Bar -->
-        <input type="text" id="searchBar" onkeyup="searchGame()" placeholder="Search game name (e.g. Hitman)...">
-
-        <div id="fileList">
-            <!-- 1. Session Skate Sim -->
-            <div class="file-section">
-                <span class="file-name">🛹 Session Skate Sim | Keyboard Fix</span>
-                <p class="description">Fixes Keyboard Not Working & Control Problems (2026 Latest Update).</p>
-                <a href="https://drive.google.com/file/d/1xG81nf80QBZ3J9CXLWYVG386bSYiAUxq/view?usp=sharing" class="btn" target="_blank">Download Files</a>
+    <div id="main-site">
+        <div class="container">
+            <h1>@iamgamer440</h1>
+            <div class="tabs">
+                <button class="tab-btn active" id="btn-all" onclick="setCat('all')">📂 All Fixes</button>
+                <button class="tab-btn" id="btn-Hitman" onclick="setCat('Hitman')">🎯 Hitman</button>
+                <button class="tab-btn" id="btn-AC" onclick="setCat('AC')">⚔️ Assassin's Creed</button>
             </div>
-
-            <!-- 2. Hitman 2 Silent Assassin -->
-            <div class="file-section">
-                <span class="file-name">🎯 Hitman 2 Silent Assassin| All-in-One Solution</span>
-                <p class="description">Unlock Missions, All Cheat Codes, Resolution Fix & More.</p>
-                <a href="https://drive.google.com/file/d/1WbyWQR32W6WpH34hX6PAeLb2fvcc36km/view?usp=sharing" class="btn" target="_blank">Download Files</a>
-            </div>
-
-            <!-- 3. Little Fighter 4 Turbo -->
-            <div class="file-section">
-                <span class="file-name">⚔️ Little Fighter 4 Turbo | Full Fix</span>
-                <p class="description">Fixes Full Screen, Articuno Crash & Black Screen Issues.</p>
-                <a href="https://drive.google.com/file/d/1b67f9QpMqC1Bjj-YWQFy-yeCEu60k4-E/view?usp=sharing" class="btn" target="_blank">Download Files</a>
-            </div>
-        </div>
-
-        <div class="footer-info">
-            <p class="password">ZIP Password: 2025 and 2026</p>
-            <p><a href="https://www.instagram.com/iamgamer.440/" class="instagram">Join Instagram for Help!</a></p>
+            <input type="text" id="searchBox" placeholder="Search any game..." oninput="updateList()">
+            <div id="gameList" class="grid"></div>
         </div>
     </div>
 
-    <!-- Search Logic Script -->
+    <audio id="myAudio" loop><source src="music.mp3" type="audio/mpeg"></audio>
+    <button class="music-btn" onclick="toggleM()">🎵 Music: ON/OFF</button>
+
     <script>
-        function searchGame() {
-            let input = document.getElementById('searchBar').value.toLowerCase();
-            let cards = document.getElementsByClassName('file-section');
-            
-            for (let i = 0; i < cards.length; i++) {
-                let title = cards[i].getElementsByClassName('file-name')[0].innerText.toLowerCase();
-                if (title.includes(input)) {
-                    cards[i].style.display = "";
-                } else {
-                    cards[i].style.display = "none";
+        const myInsta = "https://www.instagram.com/iamgamer.440/"; 
+
+        function openSite() {
+            const welcome = document.getElementById('welcome-screen');
+            const main = document.getElementById('main-site');
+            welcome.classList.add('welcome-slide-up');
+            document.getElementById('myAudio').play().catch(e => {});
+            setTimeout(() => {
+                welcome.style.display = 'none';
+                main.classList.add('main-show');
+                updateList();
+            }, 800); 
+        }
+
+        const games = [
+            { n: "🎯 Hitman 2 Silent Assassin", c: "Hitman", d: "Unlock Missions & Resolution Fix.", l: "https://drive.google.com/file/d/1WbyWQR32W6WpH34hX6PAeLb2fvcc36km/view?usp=drive_link", comingSoon: false },
+            { n: "🎯 Hitman Absolution Fix", c: "Hitman", d: "Fixes startup crashes and lag.", l: "#", comingSoon: true },
+            { n: "🎯 Hitman World of Assassins", c: "Hitman", d: "Latest connection patch.", l: "#", comingSoon: true },
+            { n: "⚔️ Assassin's Creed 1 Fix", c: "AC", d: "Modern CPU crash fix.", l: "#", comingSoon: true },
+            { n: "⚔️ Assassin's Creed 2 Fix", c: "AC", d: "Ubisoft Launcher fix.", l: "#", comingSoon: true },
+            { n: "🛹 Session Skate Sim Fix", c: "Others", d: "Control Problems Fix.", l: "https://drive.google.com/file/d/1xG81nf80QBZ3J9CXLWYVG386bSYiAUxq/view?usp=drive_link", comingSoon: false },
+            { n: "⚔️ Little Fighter 4 Turbo", c: "Others", d: "Fixes Full Screen Crash.", l: "https://drive.google.com/file/d/1b67f9QpMqC1Bjj-YWQFy-yeCEu60k4-E/view?usp=drive_link", comingSoon: false }
+        ];
+
+        let currentCat = 'all';
+
+        function setCat(cat) {
+            currentCat = cat;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            let btn = document.getElementById('btn-' + cat);
+            if(btn) btn.classList.add('active');
+            updateList();
+        }
+
+        function updateList() {
+            const list = document.getElementById('gameList');
+            const search = document.getElementById('searchBox').value.toLowerCase();
+            list.innerHTML = "";
+            games.forEach((g) => {
+                if ((currentCat === 'all' || g.c === currentCat) && g.n.toLowerCase().includes(search)) {
+                    let actionHTML = g.comingSoon ? 
+                        `<div class="coming-soon-btn">⏳ Coming Soon...</div>
+                         <div class="request-box">
+                            <span class="request-text">Request Fix 📩</span>
+                            <a href="${myInsta}" target="_blank" class="insta-btn">📸 Instagram</a>
+                         </div>` : 
+                        `<a href="${g.l}" target="_blank" class="dl-btn">Download Fix</a>`;
+                    list.innerHTML += `<div class="card"><h3>${g.n}</h3><p>${g.d}</p>${actionHTML}</div>`;
                 }
-            }
+            });
+        }
+
+        function toggleM() {
+            const audio = document.getElementById('myAudio');
+            if (audio.paused) audio.play(); else audio.pause();
         }
     </script>
-
 </body>
 </html>
