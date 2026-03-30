@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAmGamer440 | Game Fixes 2026</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0f0f0f; color: white; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .main-card { background: #1a1a1a; padding: 25px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.7); width: 100%; max-width: 550px; border: 1px solid #333; text-align: center; }
+        h1 { color: #ff4c4c; font-size: 30px; margin-bottom: 5px; }
+        .subtitle { color: #aaa; margin-bottom: 20px; font-size: 14px; letter-spacing: 1px; }
+
+        /* Search Bar Styling */
+        #searchBar { width: 90%; padding: 12px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #444; background: #252525; color: white; font-size: 15px; outline: none; }
+        #searchBar:focus { border-color: #ff4c4c; box-shadow: 0 0 10px rgba(255, 76, 76, 0.2); }
+        
+        /* Game Section Styling */
+        .file-section { background: #252525; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 6px solid #ff4c4c; text-align: left; transition: 0.3s; }
+        .file-section:hover { background: #2d2d2d; transform: scale(1.02); }
+        .file-name { font-weight: bold; font-size: 17px; color: #eee; display: block; margin-bottom: 5px; }
+        .description { font-size: 13px; color: #999; margin-bottom: 12px; line-height: 1.4; }
+        
+        .btn { background: #ff4c4c; color: white; padding: 10px 22px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; transition: 0.2s; font-size: 13px; border: none; cursor: pointer; }
+        .btn:hover { background: #e63e3e; box-shadow: 0 0 15px rgba(255, 76, 76, 0.4); }
+        
+        .footer-info { margin-top: 25px; padding-top: 15px; border-top: 1px solid #333; }
+        .password { color: #ff4c4c; font-weight: bold; font-size: 14px; }
+        .instagram { color: #E1306C; text-decoration: none; font-size: 14px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="main-card">
+        <h1>@iamgamer440</h1>
+        <p class="subtitle">OFFICIAL GAME FIXES & FILES</p>
+
+        <!-- Search Bar -->
+        <input type="text" id="searchBar" onkeyup="searchGame()" placeholder="Search game name (e.g. Hitman)...">
+
+        <div id="fileList">
+            <!-- 1. Session Skate Sim -->
+            <div class="file-section">
+                <span class="file-name">🛹 Session Skate Sim | Keyboard Fix</span>
+                <p class="description">Fixes Keyboard Not Working & Control Problems (2026 Latest Update).</p>
+                <a href="https://drive.google.com/file/d/1xG81nf80QBZ3J9CXLWYVG386bSYiAUxq/view?usp=sharing" class="btn" target="_blank">Download Files</a>
+            </div>
+
+            <!-- 2. Hitman 2 Silent Assassin -->
+            <div class="file-section">
+                <span class="file-name">🎯 Hitman 2 Silent Assassin| All-in-One Solution</span>
+                <p class="description">Unlock Missions, All Cheat Codes, Resolution Fix & More.</p>
+                <a href="https://drive.google.com/file/d/1WbyWQR32W6WpH34hX6PAeLb2fvcc36km/view?usp=sharing" class="btn" target="_blank">Download Files</a>
+            </div>
+
+            <!-- 3. Little Fighter 4 Turbo -->
+            <div class="file-section">
+                <span class="file-name">⚔️ Little Fighter 4 Turbo | Full Fix</span>
+                <p class="description">Fixes Full Screen, Articuno Crash & Black Screen Issues.</p>
+                <a href="https://drive.google.com/file/d/1b67f9QpMqC1Bjj-YWQFy-yeCEu60k4-E/view?usp=sharing" class="btn" target="_blank">Download Files</a>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <p class="password">ZIP Password: 2025 and 2026</p>
+            <p><a href="https://www.instagram.com/iamgamer.440/" class="instagram">Join Instagram for Help!</a></p>
+        </div>
+    </div>
+
+    <!-- Search Logic Script -->
+    <script>
+        function searchGame() {
+            let input = document.getElementById('searchBar').value.toLowerCase();
+            let cards = document.getElementsByClassName('file-section');
+            
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getElementsByClassName('file-name')[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
